@@ -1,3 +1,7 @@
+#!/bin/bash
+
+# Write the README content to README.md
+cat <<EOF > README.md
 # 💼 Salary-AI-Demo
 
 ## 📝 An Educational Project Inspired by [lambda.global/talent/salary_ai](https://lambda.global/talent/salary_ai)
@@ -14,29 +18,29 @@ The application leverages OpenAI embeddings and LangChain to create a semantic u
 
 To install this project, please clone the repository and install the necessary dependencies:
 
-```bash
-git clone https://github.com/bakhbyergyen/salary-ai-demo.git
+\`\`\`bash
+git clone https://github.com/yourusername/salary-ai-demo.git
 cd salary-ai-demo
 yarn install
 # or
 npm install
 # or
 pnpm install
-```
+\`\`\`
 
-You will also need to set up your environment variables. An example environment file is provided as `.env.local.example`. To use it:
+You will also need to set up your environment variables. An example environment file is provided as \`.env.local.example\`. To use it:
 
-1. Copy the example file to create a new file:
+1. Copy the example file to create a new `.env.local` file:
 
-```bash
+\`\`\`bash
 cp .env.local.example .env.local
-```
+\`\`\`
 
-2. Add your OpenAI API key to the file:
+2. Add your OpenAI API key to the `.env.local` file:
 
-```bash
+\`\`\`bash
 OPENAI_API_KEY=your_api_key_here
-```
+\`\`\`
 
 ⚠️ **Be careful** not to expose your OpenAI API key. This key should be kept private and not shared in public repositories or with unauthorized individuals.
 
@@ -44,13 +48,13 @@ OPENAI_API_KEY=your_api_key_here
 
 To run the application, start the development server:
 
-```bash
+\`\`\`bash
 yarn dev
 # or
 npm run dev
 # or
 pnpm dev
-```
+\`\`\`
 
 Open [http://localhost:3000](http://localhost:3000) in your browser to interact with the application.
 
@@ -62,14 +66,11 @@ If you're using Visual Studio Code (VSCode), you can quickly launch the developm
 2. Go to the **Run and Debug** section on the sidebar.
 3. Select **Launch Next.js** and click the green play button.
 
-This will start the development server on port using yarn install v1.22.19
-[1/4] Resolving packages...
-success Already up-to-date.
-Done in 0.40s. as the package manager.
+This will start the development server on port `3001` using `yarn` as the package manager.
 
 **.vscode/launch.json** configuration:
 
-```json
+\`\`\`json
 {
   "version": "0.2.0",
   "configurations": [
@@ -82,78 +83,77 @@ Done in 0.40s. as the package manager.
         "NODE_ENV": "development"
       },
       "runtimeExecutable": "yarn",
-      "cwd": "${workspaceFolder}",
+      "cwd": "\${workspaceFolder}",
       "console": "integratedTerminal"
     }
   ]
 }
-```
+\`\`\`
 
 ### Using OpenAI API for JSON-Formatted Responses
 
 This application utilizes the function call feature of the OpenAI API to return job recommendations in a structured JSON format. Here’s how it’s done:
 
-```javascript
+\`\`\`javascript
 const response = await openai.chat.completions.create({
-  model: "gpt-4",
-  messages: [
-    {
-      role: "system",
-      content:
-        "You are an insightful career advisor with a deep understanding of modern job markets and emerging career trends. Analyze the given resume and suggest suitable job positions.",
-    },
-    { role: "user", content: resumeText },
-  ],
-  functions: [
-    {
-      name: "provide_job_recommendations",
-      description: "Provide job recommendations based on the resume",
-      parameters: {
-        type: "object",
-        properties: {
-          recommendations: {
-            type: "array",
-            items: {
+    model: "gpt-4",
+    messages: [
+      {
+        role: "system",
+        content: "You are an insightful career advisor with a deep understanding of modern job markets and emerging career trends. Analyze the given resume and suggest suitable job positions.",
+      },
+      { role: "user", content: resumeText },
+    ],
+    functions: [
+      {
+        name: "provide_job_recommendations",
+        description: "Provide job recommendations based on the resume",
+        parameters: {
+          type: "object",
+          properties: {
+            recommendations: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  title: { type: "string" },
+                  description: { type: "string" },
+                  yearsOfExperience: { type: "number" },
+                  suitabilityReason: { type: "string" },
+                  salaryRangeMNT: {
+                    type: "object",
+                    properties: {
+                      min: { type: "number" },
+                      max: { type: "number" },
+                    },
+                    required: ["min", "max"],
+                  },
+                },
+                required: [
+                  "title",
+                  "description",
+                  "yearsOfExperience",
+                  "suitabilityReason",
+                  "salaryRangeMNT",
+                ],
+              },
+            },
+            overallRecommendation: {
               type: "object",
               properties: {
                 title: { type: "string" },
-                description: { type: "string" },
-                yearsOfExperience: { type: "number" },
-                suitabilityReason: { type: "string" },
-                salaryRangeMNT: {
-                  type: "object",
-                  properties: {
-                    min: { type: "number" },
-                    max: { type: "number" },
-                  },
-                  required: ["min", "max"],
-                },
+                reason: { type: "string" },
               },
-              required: [
-                "title",
-                "description",
-                "yearsOfExperience",
-                "suitabilityReason",
-                "salaryRangeMNT",
-              ],
+              required: ["title", "reason"],
             },
           },
-          overallRecommendation: {
-            type: "object",
-            properties: {
-              title: { type: "string" },
-              reason: { type: "string" },
-            },
-            required: ["title", "reason"],
-          },
+          required: ["recommendations", "overallRecommendation"],
         },
-        required: ["recommendations", "overallRecommendation"],
       },
-    },
-  ],
-  function_call: { name: "provide_job_recommendations" },
+    ],
+    function_call: { name: "provide_job_recommendations" },
 });
-```
+\`\`\`
 
 This structure allows you to get a well-formatted JSON response that includes:
 
@@ -200,3 +200,7 @@ This demo is for educational purposes only. It is a simplified version inspired 
 ## 📄 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+EOF
+
+echo "README.md has been successfully created."

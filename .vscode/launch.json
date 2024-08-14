@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Next.js",
+      "runtimeArgs": ["run", "dev", "-p", "3001"],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "runtimeExecutable": "yarn",
+      "runtimeVersion": "22.5.1",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "outputCapture": "std",
+      "skipFiles": ["<node_internals>/**"]
+    }
+  ]
+}
