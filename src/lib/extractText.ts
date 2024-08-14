@@ -1,4 +1,4 @@
-import { readFile } from "fs/promises";
+import { readFile, unlink } from "fs/promises";
 import path from "path";
 import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 import mammoth from "mammoth";
@@ -27,4 +27,9 @@ export async function extractTextFromFile(fileId: string): Promise<string> {
   }
 
   throw new Error("Unsupported file type. Please upload a PDF or DOCX file.");
+}
+
+export async function deleteFile(fileId: string): Promise<void> {
+  const filePath = path.join(process.cwd(), "uploads", fileId);
+  await unlink(filePath);
 }

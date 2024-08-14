@@ -4,9 +4,6 @@ import { useRecommendations } from "@/context/RecommendationsContext";
 
 const RecommendationsComponent: React.FC = () => {
   const { recommendations, overallRecommendation } = useRecommendations();
-  console.log("Recommendations:", recommendations);
-  console.log("Overall Recommendation:", overallRecommendation);
-
   if (
     !Array.isArray(recommendations) ||
     recommendations.length === 0 ||

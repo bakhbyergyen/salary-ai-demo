@@ -3,7 +3,13 @@ import mainFont from "@/constants/fontStyle";
 import { Metadata } from "next";
 import metadataJSON from "@/config/metaData";
 import ClientProviders from "@/components/ClientProviders";
-export const metadata: Metadata = metadataJSON;
+
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+
+export const metadata: Metadata = {
+  ...metadataJSON,
+  metadataBase: new URL(baseUrl),
+};
 
 export default function RootLayout({
   children,

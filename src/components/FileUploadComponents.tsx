@@ -36,7 +36,6 @@ const FileUploadComponent: React.FC = () => {
             processFile(data.fileId, {
               onSuccess: (processResult) => {
                 if (processResult.success) {
-                  console.log(processResult);
                   setRecommendations(processResult.recommendations);
                   setOverallRecommendation(processResult.overallRecommendation);
                 }
@@ -47,6 +46,9 @@ const FileUploadComponent: React.FC = () => {
       });
     }
   };
+
+  const isProcessingInProgress = isUploading || isProcessing;
+
   return (
     <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
       <div
@@ -92,16 +94,19 @@ const FileUploadComponent: React.FC = () => {
           </p>
           <button
             onClick={handleUpload}
-            className="mt-2 w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+            disabled={isProcessingInProgress}
+            className={`mt-2 w-full py-2 text-white rounded transition-colors ${
+              isProcessingInProgress
+                ? "bg-blue-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
           >
             Upload and Process
           </button>
         </div>
       )}
 
-      {(isUploading || isProcessing) && (
-        <p className="text-blue-600">Processing...</p>
-      )}
+      {isProcessingInProgress && <p className="text-blue-600">Processing...</p>}
 
       {(isUploadError || isProcessError) && (
         <p className="text-red-600">

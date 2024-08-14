@@ -77,7 +77,7 @@ Done in 0.40s. as the package manager.
       "type": "node",
       "request": "launch",
       "name": "Launch Next.js",
-      "runtimeArgs": ["run", "dev", "-p", "3001"],
+      "runtimeArgs": ["run", "dev", "-p", "3000"],
       "env": {
         "NODE_ENV": "development"
       },

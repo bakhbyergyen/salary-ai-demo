@@ -4,8 +4,8 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Next.js",
-      "runtimeArgs": ["run", "dev", "-p", "3001"],
+      "name": "yarn dev",
+      "runtimeArgs": ["run", "dev", "-p", "3000"],
       "env": {
         "NODE_ENV": "development"
       },
